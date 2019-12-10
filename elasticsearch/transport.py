@@ -315,7 +315,7 @@ class Transport(object):
             passed to the connection
         """
         if body is not None:
-            if not isinstance(data, bytes) and not hasattr(data, 'read'):
+            if not isinstance(body, bytes) and not hasattr(body, 'read'):
                 body = self.serializer.dumps(body)
 
             # some clients or environments don't support sending GET with body
@@ -331,7 +331,7 @@ class Transport(object):
                     params["source"] = body
                     body = None
 
-        if body is not None and not isinstance(body, bytes) and not hasattr(data, 'read'):
+        if body is not None and not isinstance(body, bytes) and not hasattr(body, 'read'):
             try:
                 body = body.encode("utf-8", "surrogatepass")
             except (UnicodeDecodeError, AttributeError):
