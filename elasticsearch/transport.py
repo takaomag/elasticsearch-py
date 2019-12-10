@@ -1,3 +1,4 @@
+import io
 import time
 from itertools import chain
 from platform import python_version
@@ -315,7 +316,7 @@ class Transport(object):
             passed to the connection
         """
         if body is not None:
-            if not isinstance(body, bytes):
+            if not isinstance(body, (io.IOBase, bytes)):
                 body = self.serializer.dumps(body)
 
             # some clients or environments don't support sending GET with body
