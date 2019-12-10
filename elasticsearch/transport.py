@@ -332,7 +332,7 @@ class Transport(object):
                     params["source"] = body
                     body = None
 
-        if body is not None:
+        if body is not None and not isinstance(body, (io.IOBase, bytes)):
             try:
                 body = body.encode("utf-8", "surrogatepass")
             except (UnicodeDecodeError, AttributeError):
