@@ -1439,7 +1439,7 @@ class Elasticsearch(object):
         "typed_keys",
         "version",
     )
-    def search(self, body=None, index=None, doc_type=None, params=None):
+    def search(self, body=None, index=None, doc_type=None, params=None, headers=None):
         """
         Returns results matching a query.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html>`_
@@ -1545,7 +1545,7 @@ class Elasticsearch(object):
             params["from"] = params.pop("from_")
 
         return self.transport.perform_request(
-            "GET", _make_path(index, doc_type, "_search"), params=params, body=body
+            "GET", _make_path(index, doc_type, "_search"), params=params, body=body, headers=headers
         )
 
     @query_params(
