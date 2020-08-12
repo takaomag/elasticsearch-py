@@ -395,7 +395,8 @@ class Transport(object):
     def _resolve_request_args(self, method, params, body):
         """Resolves parameters for .perform_request()"""
         if body is not None:
-            body = self.serializer.dumps(body)
+            if not isinstance(body, bytes) and not hasattr(body, 'read'):
+                body = self.serializer.dumps(body)
 
             # some clients or environments don't support sending GET with body
             if method in ("HEAD", "GET") and self.send_get_body_as != "GET":
@@ -410,7 +411,7 @@ class Transport(object):
                     params["source"] = body
                     body = None
 
-        if body is not None:
+        if body is not None and not isinstance(body, bytes) and not hasattr(body, 'read'):
             try:
                 body = body.encode("utf-8", "surrogatepass")
             except (UnicodeDecodeError, AttributeError):
